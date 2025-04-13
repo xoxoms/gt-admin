@@ -27,11 +27,6 @@ class PersonCreator(
             )
         )
 
-        return Person(
-            saved.id!!,
-            saved.name,
-            saved.phone,
-            saved.address,
-        )
+        return Person.fromEntity(saved)
     }
 }

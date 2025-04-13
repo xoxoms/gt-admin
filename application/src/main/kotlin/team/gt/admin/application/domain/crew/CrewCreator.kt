@@ -14,7 +14,7 @@ class CrewCreator(
         positionId: Long,
         personId: Long,
         nickname: String,
-        phone: String,
+        mainPhone: String,
         regTs: LocalDateTime = LocalDateTime.now(),
         updTs: LocalDateTime = LocalDateTime.now(),
     ): Crew {
@@ -23,18 +23,12 @@ class CrewCreator(
                 positionId = positionId,
                 personId = personId,
                 nickname = nickname,
-                phone = phone,
+                mainPhone = mainPhone,
                 regTs = regTs,
                 updTs = updTs,
             )
         )
 
-        return Crew(
-            id = saved.id!!,
-            positionId = saved.positionId,
-            personId = saved.personId,
-            name = saved.nickname,
-            phone = saved.phone,
-        )
+        return Crew.fromEntity(saved)
     }
 }

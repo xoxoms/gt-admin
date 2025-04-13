@@ -30,7 +30,7 @@ class CrewCreateService(
             positionId = positionId,
             personId = person.id,
             nickname = nickname,
-            phone = mainPhone,
+            mainPhone = mainPhone,
         )
 
         return crew.id

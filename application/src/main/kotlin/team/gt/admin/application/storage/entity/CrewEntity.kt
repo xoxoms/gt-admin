@@ -22,8 +22,10 @@ class CrewEntity(
     val personId: Long,
     @Column(name = "nickname", columnDefinition = "varchar(100) not null comment '닉네임'")
     val nickname: String,
-    @Column(name = "phone", columnDefinition = "varchar(100) not null comment '업무용 전화번호'")
-    val phone: String,
+    @Column(name = "mainPhone", columnDefinition = "varchar(100) not null comment '업무용 전화번호'")
+    val mainPhone: String,
+    @Column(name = "resigned", columnDefinition = "bit(1) not null comment '퇴사여부'")
+    val resigned: Boolean,
     @Column(name = "regTs", columnDefinition = "datetime(0) not null comment '생성일시'")
     val regTs: LocalDateTime,
     @LastModifiedDate
@@ -37,7 +39,7 @@ class CrewEntity(
             positionId: Long,
             personId: Long,
             nickname: String,
-            phone: String,
+            mainPhone: String,
             regTs: LocalDateTime = LocalDateTime.now(),
             updTs: LocalDateTime = LocalDateTime.now(),
         ): CrewEntity {
@@ -46,7 +48,8 @@ class CrewEntity(
                 positionId = positionId,
                 personId = personId,
                 nickname = nickname,
-                phone = phone,
+                mainPhone = mainPhone,
+                resigned = false,
                 regTs = regTs,
                 updTs = updTs,
             )
