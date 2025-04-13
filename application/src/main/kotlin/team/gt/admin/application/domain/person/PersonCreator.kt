@@ -13,7 +13,7 @@ class PersonCreator(
     fun create(
         name: String,
         phone: String,
-        address: String,
+        address: String = "",
         regTs: LocalDateTime = LocalDateTime.now(),
         updTs: LocalDateTime = LocalDateTime.now(),
     ): Person {
