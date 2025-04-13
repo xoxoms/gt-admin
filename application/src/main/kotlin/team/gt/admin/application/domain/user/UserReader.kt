@@ -9,8 +9,8 @@ class UserReader(
     private val userRepository: UserRepository,
 ) {
 
-    fun readByIdOrThrow(id: Long): User {
-        val entity = userRepository.findById(id).orElseThrow { DomainNotFoundException() }
+    fun readByLoginIdOrThrow(loginId: String): User {
+        val entity = userRepository.findByLoginId(loginId) ?: throw DomainNotFoundException()
         return User.fromEntity(entity)
     }
 }

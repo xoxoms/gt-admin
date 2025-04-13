@@ -14,26 +14,11 @@ data class User(
 
     companion object {
 
-        fun createNew(
-            loginId: String,
-            password: String,
-            name: String,
-            regTs: LocalDateTime = LocalDateTime.now(),
-            updTs: LocalDateTime = LocalDateTime.now(),
-        ): User {
-            return User(
-                id = 0L,
-                loginId = loginId,
-                password = password,
-                name = name,
-                regTs = regTs,
-                updTs = updTs,
-            )
-        }
-
         fun fromEntity(entity: UserEntity): User {
             return User(
                 id = entity.id!!,
+                loginId = entity.loginId,
+                password = entity.password,
                 name = entity.name,
                 regTs = entity.regTs,
                 updTs = entity.updTs,

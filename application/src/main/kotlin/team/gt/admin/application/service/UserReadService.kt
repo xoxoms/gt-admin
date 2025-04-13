@@ -9,7 +9,7 @@ class UserReadService(
     private val userReader: UserReader,
 ) {
 
-    fun readByIdOrThrow(id: Long): User {
-        return userReader.readByIdOrThrow(id)
+    fun readByLoginIdOrThrow(loginId: String): User {
+        return userReader.readByLoginIdOrThrow(loginId)
     }
 }

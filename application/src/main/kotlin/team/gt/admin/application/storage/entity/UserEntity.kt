@@ -6,11 +6,17 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import java.time.LocalDateTime
 import org.springframework.data.annotation.LastModifiedDate
 
 @Entity
-@Table(name = "user")
+@Table(
+    name = "admin_user",
+    uniqueConstraints = [
+        UniqueConstraint(name = "u_idx_loginId", columnNames = ["loginId"]),
+    ]
+)
 data class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +24,7 @@ data class UserEntity(
     val id: Long?,
     @Column(name = "loginId", columnDefinition = "varchar(100) not null comment 'login ID'")
     val loginId: String,
-    @Column(name = "name", columnDefinition = "varchar(100) not null comment '비밀번호'")
+    @Column(name = "password", columnDefinition = "varchar(300) not null comment '비밀번호'")
     val password: String,
     @Column(name = "name", columnDefinition = "varchar(100) not null comment '이름'")
     val name: String,

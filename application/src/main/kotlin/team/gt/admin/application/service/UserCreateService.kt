@@ -13,7 +13,6 @@ class UserCreateService(
         password: String,
         name: String,
     ): Long {
-
         return userCreator.create(
             UserCreator.Command(
                 loginId = loginId,
