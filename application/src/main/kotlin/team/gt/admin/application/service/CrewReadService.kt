@@ -19,7 +19,7 @@ class CrewReadService(
     fun readAll(): List<CrewDetailView> {
         val positions = positionReader.readAll()
         val crews = crewReader.readAllWorkingCrews()
-        val persons = crews.map { it.id }
+        val persons = crews.map { it.personId }
             .chunked(128)
             .flatMap { ids ->
                 personReader.readByPersonIds(ids)
