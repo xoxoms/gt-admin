@@ -31,23 +31,4 @@ class SkillEntity(
     val updTs: LocalDateTime,
 ) {
 
-    companion object {
-
-        fun createNew(
-            name: String,
-            creator: String,
-            regTs: LocalDateTime = LocalDateTime.now(),
-            updTs: LocalDateTime = LocalDateTime.now(),
-        ): SkillEntity {
-            return SkillEntity(
-                id = null,
-                name = name,
-                deleted = false,
-                creator = creator,
-                regTs = regTs,
-                updater = creator,
-                updTs = updTs,
-            )
-        }
-    }
 }

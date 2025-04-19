@@ -1,6 +1,7 @@
 package team.gt.admin.application.domain.skill
 
 import java.time.LocalDateTime
+import team.gt.admin.application.constants.JUST_CREATED_ID
 
 class Skill(
     val id: Long,
@@ -20,7 +21,7 @@ class Skill(
             regTs: LocalDateTime = LocalDateTime.now(),
         ): Skill {
             return Skill(
-                id = 0L,
+                id = JUST_CREATED_ID,
                 name = name,
                 deleted = false,
                 creator = creator,

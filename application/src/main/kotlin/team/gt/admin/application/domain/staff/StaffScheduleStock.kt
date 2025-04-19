@@ -1,9 +1,10 @@
 package team.gt.admin.application.domain.staff
 
 import java.time.LocalDateTime
+import team.gt.admin.application.constants.JUST_CREATED_ID
 
 class StaffScheduleStock(
-    val id: Long?,
+    val id: Long,
     val staffId: Long,
     val dateHour: LocalDateTime,
     val quarter: Int,
@@ -36,7 +37,7 @@ class StaffScheduleStock(
             regTs: LocalDateTime = LocalDateTime.now(),
         ): StaffScheduleStock {
             return StaffScheduleStock(
-                id = 0L,
+                id = JUST_CREATED_ID,
                 staffId = staffId,
                 dateHour = dateHour,
                 quarter = quarter,

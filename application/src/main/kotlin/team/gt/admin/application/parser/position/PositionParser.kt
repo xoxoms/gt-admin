@@ -1,14 +1,14 @@
-package team.gt.admin.application.parser.skill
+package team.gt.admin.application.parser.position
 
 import team.gt.admin.application.constants.JUST_CREATED_ID
-import team.gt.admin.application.domain.skill.Skill
-import team.gt.admin.application.storage.entity.SkillEntity
+import team.gt.admin.application.domain.position.Position
+import team.gt.admin.application.storage.entity.PositionEntity
 
-object SkillParser {
+object PositionParser {
 
-    fun fromDomain(domain: Skill): SkillEntity {
+    fun fromDomain(domain: Position): PositionEntity {
 
-        return SkillEntity(
+        return PositionEntity(
             id = if (domain.id == JUST_CREATED_ID) null else domain.id,
             name = domain.name,
             deleted = domain.deleted,
@@ -19,9 +19,9 @@ object SkillParser {
         )
     }
 
-    fun toDomain(entity: SkillEntity): Skill {
+    fun toDomain(entity: PositionEntity): Position {
 
-        return Skill(
+        return Position(
             id = entity.id!!,
             name = entity.name,
             deleted = entity.deleted,

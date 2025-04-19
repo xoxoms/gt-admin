@@ -2,6 +2,7 @@ package team.gt.admin.application.service
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import team.gt.admin.application.domain.position.Position
 import team.gt.admin.application.domain.position.PositionCreator
 import team.gt.admin.application.domain.position.PositionReader
 
@@ -15,13 +16,12 @@ class PositionCreateService(
     fun createPositionIfNotExists(
         name: String,
         creator: String,
-    ) {
+    ): Position {
         val exists = positionReader.readByName(name)
-        if (exists.isEmpty()) {
-            positionCreator.create(
-                name = name,
-                creator = creator,
-            )
+        return if (exists.isEmpty()) {
+            positionCreator.create(Position.createNew(name, creator))
+        } else {
+            exists.first()
         }
     }
 }

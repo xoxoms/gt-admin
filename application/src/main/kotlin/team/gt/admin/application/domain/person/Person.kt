@@ -1,6 +1,7 @@
 package team.gt.admin.application.domain.person
 
 import java.time.LocalDateTime
+import team.gt.admin.application.constants.JUST_CREATED_ID
 
 class Person(
     val id: Long,
@@ -21,7 +22,7 @@ class Person(
             updTs: LocalDateTime = LocalDateTime.now(),
         ): Person {
             return Person(
-                id = 0L,
+                id = JUST_CREATED_ID,
                 name = name,
                 phone = phone,
                 address = address,

@@ -6,8 +6,11 @@ object AvailableScheduleCalculator {
         quarterTaken: Int, 
         stocks: List<StaffScheduleStock>,
     ): List<StaffScheduleStock> {
-        if (stocks.isEmpty()) { return emptyList() }
-        val sorted = stocks.sortedWith(compareBy({ it.dateHour }, { it.quarter }))
+        val availableStocks = stocks.filter { it.available }
+        if (availableStocks.isEmpty()) { return emptyList() }
+
+        val sorted = availableStocks
+            .sortedWith(compareBy({ it.dateHour }, { it.quarter }))
         val groupedByContinuous = mutableListOf<List<StaffScheduleStock>>()
 
         var current = mutableListOf<StaffScheduleStock>()

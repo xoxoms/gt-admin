@@ -1,5 +1,6 @@
 package team.gt.admin.application.parser.person
 
+import team.gt.admin.application.constants.JUST_CREATED_ID
 import team.gt.admin.application.domain.person.Person
 import team.gt.admin.application.storage.entity.PersonEntity
 
@@ -8,7 +9,7 @@ object PersonParser {
     fun fromDomain(domain: Person): PersonEntity {
 
         return PersonEntity(
-            id = domain.id,
+            id = if (domain.id == JUST_CREATED_ID) null else domain.id,
             name = domain.name,
             phone = domain.phone,
             address = domain.address,

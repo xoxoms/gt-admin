@@ -1,5 +1,6 @@
 package team.gt.admin.application.parser.staff
 
+import team.gt.admin.application.constants.JUST_CREATED_ID
 import team.gt.admin.application.domain.staff.Staff
 import team.gt.admin.application.storage.entity.StaffEntity
 
@@ -8,7 +9,7 @@ object StaffParser {
     fun fromDomain(domain: Staff): StaffEntity {
 
         return StaffEntity(
-            id = domain.id,
+            id = if (domain.id == JUST_CREATED_ID) null else domain.id,
             positionId = domain.positionId,
             personId = domain.personId,
             nickname = domain.nickname,

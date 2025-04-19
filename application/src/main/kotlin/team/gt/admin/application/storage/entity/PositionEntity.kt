@@ -30,24 +30,4 @@ class PositionEntity(
     @Column(name = "updTs", columnDefinition = "datetime(0) not null comment '마지막 수정일시'")
     val updTs: LocalDateTime,
 ) {
-
-    companion object {
-
-        fun createNew(
-            name: String,
-            creator: String,
-            regTs: LocalDateTime = LocalDateTime.now(),
-            updTs: LocalDateTime = LocalDateTime.now(),
-        ): PositionEntity {
-            return PositionEntity(
-                id = null,
-                name = name,
-                deleted = false,
-                creator = creator,
-                regTs = regTs,
-                updater = creator,
-                updTs = updTs,
-            )
-        }
-    }
 }

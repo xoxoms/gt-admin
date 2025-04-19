@@ -68,7 +68,7 @@ class SpringSecurityConfiguration {
             .authorizeHttpRequests {
                 it
                     .requestMatchers(PathRequest.toH2Console()).permitAll()
-                    .requestMatchers("/api/v1/login", "/error").permitAll()
+                    .requestMatchers("/api/v1/login", "/error", "/api/v1/init").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                     .anyRequest().authenticated()
             }

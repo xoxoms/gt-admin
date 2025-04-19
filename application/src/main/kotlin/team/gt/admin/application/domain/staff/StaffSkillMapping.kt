@@ -1,6 +1,7 @@
 package team.gt.admin.application.domain.staff
 
 import java.time.LocalDateTime
+import team.gt.admin.application.constants.JUST_CREATED_ID
 
 class StaffSkillMapping(
     val id: Long,
@@ -28,7 +29,7 @@ class StaffSkillMapping(
         ): StaffSkillMapping {
 
             return StaffSkillMapping(
-                id = 0L,
+                id = JUST_CREATED_ID,
                 staffId = staffId,
                 skillId = skillId,
                 price = price,

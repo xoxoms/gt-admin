@@ -1,5 +1,6 @@
 package team.gt.admin.application.parser.staff
 
+import team.gt.admin.application.constants.JUST_CREATED_ID
 import team.gt.admin.application.domain.staff.StaffScheduleStock
 import team.gt.admin.application.storage.entity.StaffScheduleStockEntity
 
@@ -7,7 +8,7 @@ object StaffScheduleStockParser {
 
     fun fromDomain(domain: StaffScheduleStock): StaffScheduleStockEntity {
         return StaffScheduleStockEntity(
-            id = domain.id,
+            id = if (domain.id == JUST_CREATED_ID) null else domain.id,
             staffId = domain.staffId,
             dateHour = domain.dateHour,
             quarter = domain.quarter,
@@ -19,7 +20,7 @@ object StaffScheduleStockParser {
 
     fun toDomain(entity: StaffScheduleStockEntity): StaffScheduleStock {
         return StaffScheduleStock(
-            id = entity.id,
+            id = entity.id!!,
             staffId = entity.staffId,
             dateHour = entity.dateHour,
             quarter = entity.quarter,
