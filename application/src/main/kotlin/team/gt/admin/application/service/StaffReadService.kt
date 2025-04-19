@@ -1,53 +1,53 @@
 package team.gt.admin.application.service
 
 import org.springframework.stereotype.Service
-import team.gt.admin.application.domain.crew.Crew
-import team.gt.admin.application.domain.crew.CrewDetailView
-import team.gt.admin.application.domain.crew.CrewReader
+import team.gt.admin.application.domain.staff.Staff
+import team.gt.admin.application.domain.staff.StaffDetailView
+import team.gt.admin.application.domain.staff.StaffReader
 import team.gt.admin.application.domain.person.Person
 import team.gt.admin.application.domain.person.PersonReader
 import team.gt.admin.application.domain.position.Position
 import team.gt.admin.application.domain.position.PositionReader
 
 @Service
-class CrewReadService(
+class StaffReadService(
     private val positionReader: PositionReader,
-    private val crewReader: CrewReader,
+    private val staffReader: StaffReader,
     private val personReader: PersonReader,
 ) {
 
-    fun readAll(): List<CrewDetailView> {
+    fun readAll(): List<StaffDetailView> {
         val positions = positionReader.readAll()
-        val crews = crewReader.readAllWorkingCrews()
-        val persons = crews.map { it.personId }
+        val staffs = staffReader.readAllWorkingStaffs()
+        val persons = staffs.map { it.personId }
             .chunked(128)
             .flatMap { ids ->
                 personReader.readByPersonIds(ids)
             }
 
-        return associateCrewView(positions, crews, persons)
+        return associateStaffView(positions, staffs, persons)
     }
 
-    private fun associateCrewView(
+    private fun associateStaffView(
         positions: List<Position>,
-        crews: List<Crew>,
+        staffs: List<Staff>,
         persons: List<Person>,
-    ): List<CrewDetailView> {
+    ): List<StaffDetailView> {
         val positionIdPositionMap = positions.associateBy { it.id }
         val personIdPersonMap = persons.associateBy { it.id }
-        return crews.map { crew ->
-            val position = positionIdPositionMap[crew.positionId]
-            val person = personIdPersonMap[crew.personId]
+        return staffs.map { staff ->
+            val position = positionIdPositionMap[staff.positionId]
+            val person = personIdPersonMap[staff.personId]
             val default = "-"
 
-            CrewDetailView(
-                crewId = crew.id,
-                positionId = crew.positionId,
-                personId = crew.positionId,
+            StaffDetailView(
+                staffId = staff.id,
+                positionId = staff.positionId,
+                personId = staff.positionId,
                 privatePhone = person?.phone ?: default,
                 privateAddress = person?.address ?: default,
-                nickname = crew.nickname,
-                mainPhone = crew.mainPhone,
+                nickname = staff.nickname,
+                mainPhone = staff.mainPhone,
                 position = position?.name ?: default,
             )
         }

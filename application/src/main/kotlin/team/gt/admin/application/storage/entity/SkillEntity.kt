@@ -10,24 +10,22 @@ import java.time.LocalDateTime
 import org.springframework.data.annotation.LastModifiedDate
 
 @Entity
-@Table(name = "crew")
-class CrewEntity(
+@Table(name = "skill")
+class SkillEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: Long?,
-    @Column(name = "positionId", columnDefinition = "bigint(11) not null comment 'FK: position.id'")
-    val positionId: Long,
-    @Column(name = "personId", columnDefinition = "bigint(11) not null comment 'FK: person.id'")
-    val personId: Long,
-    @Column(name = "nickname", columnDefinition = "varchar(100) not null comment '닉네임'")
-    val nickname: String,
-    @Column(name = "mainPhone", columnDefinition = "varchar(100) not null comment '업무용 전화번호'")
-    val mainPhone: String,
-    @Column(name = "resigned", columnDefinition = "bit(1) not null comment '퇴사여부'")
-    val resigned: Boolean,
+    @Column(name = "name", columnDefinition = "varchar(100) not null comment '직책명'")
+    val name: String,
+    @Column(name = "deleted", columnDefinition = "bit(1) not null comment '삭제여부'")
+    val deleted: Boolean,
+    @Column(name = "creator", columnDefinition = "varchar(100) not null comment '만든이'")
+    val creator: String,
     @Column(name = "regTs", columnDefinition = "datetime(0) not null comment '생성일시'")
     val regTs: LocalDateTime,
+    @Column(name = "updater", columnDefinition = "varchar(100) not null comment '수정자'")
+    val updater: String,
     @LastModifiedDate
     @Column(name = "updTs", columnDefinition = "datetime(0) not null comment '마지막 수정일시'")
     val updTs: LocalDateTime,
@@ -36,21 +34,18 @@ class CrewEntity(
     companion object {
 
         fun createNew(
-            positionId: Long,
-            personId: Long,
-            nickname: String,
-            mainPhone: String,
+            name: String,
+            creator: String,
             regTs: LocalDateTime = LocalDateTime.now(),
             updTs: LocalDateTime = LocalDateTime.now(),
-        ): CrewEntity {
-            return CrewEntity(
+        ): SkillEntity {
+            return SkillEntity(
                 id = null,
-                positionId = positionId,
-                personId = personId,
-                nickname = nickname,
-                mainPhone = mainPhone,
-                resigned = false,
+                name = name,
+                deleted = false,
+                creator = creator,
                 regTs = regTs,
+                updater = creator,
                 updTs = updTs,
             )
         }

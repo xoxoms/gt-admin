@@ -3,6 +3,7 @@ package team.gt.admin.application.service
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.gt.admin.application.domain.customer.CustomerCreator
+import team.gt.admin.application.domain.person.Person
 import team.gt.admin.application.domain.person.PersonCreator
 import team.gt.admin.application.enums.Sex
 import team.gt.admin.application.enums.VisitSource
@@ -22,8 +23,7 @@ class CustomerCreateService(
         visitSourceId: Long?,
     ): Long {
         val person = personCreator.create(
-            name = name,
-            phone = phone,
+            Person.createNew(name, phone, "")
         )
 
         val customer = customerCreator.create(

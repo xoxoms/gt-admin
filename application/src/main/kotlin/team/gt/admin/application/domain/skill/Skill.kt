@@ -1,13 +1,14 @@
-package team.gt.admin.application.domain.person
+package team.gt.admin.application.domain.skill
 
 import java.time.LocalDateTime
 
-class Person(
+class Skill(
     val id: Long,
     val name: String,
-    val phone: String,
-    val address: String,
+    val deleted: Boolean,
+    val creator: String,
     val regTs: LocalDateTime,
+    val updater: String,
     val updTs: LocalDateTime,
 ) {
 
@@ -15,18 +16,17 @@ class Person(
 
         fun createNew(
             name: String,
-            phone: String,
-            address: String,
+            creator: String,
             regTs: LocalDateTime = LocalDateTime.now(),
-            updTs: LocalDateTime = LocalDateTime.now(),
-        ): Person {
-            return Person(
+        ): Skill {
+            return Skill(
                 id = 0L,
                 name = name,
-                phone = phone,
-                address = address,
+                deleted = false,
+                creator = creator,
                 regTs = regTs,
-                updTs = updTs,
+                updater = creator,
+                updTs = regTs,
             )
         }
     }

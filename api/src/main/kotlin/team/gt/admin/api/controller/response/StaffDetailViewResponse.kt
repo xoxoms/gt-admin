@@ -1,7 +1,7 @@
-package team.gt.admin.application.domain.crew
+package team.gt.admin.api.controller.response
 
-class CrewDetailView(
-    val crewId: Long,
+class StaffDetailViewResponse(
+    val staffId: Long,
     val positionId: Long,
     val personId: Long,
 

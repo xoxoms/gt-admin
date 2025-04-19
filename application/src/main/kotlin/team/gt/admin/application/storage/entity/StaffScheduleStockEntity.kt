@@ -10,23 +10,24 @@ import java.time.LocalDateTime
 import org.springframework.data.annotation.LastModifiedDate
 
 @Entity
-@Table(name = "person")
-class PersonEntity(
+@Table(name = "staff_schedule_stock")
+class StaffScheduleStockEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: Long?,
-    @Column(name = "name", columnDefinition = "varchar(100) not null comment '이름'")
-    val name: String,
-    @Column(name = "phone", columnDefinition = "varchar(100) not null comment '전화번호'")
-    val phone: String,
-    @Column(name = "address", columnDefinition = "varchar(300) not null comment '주소'")
-    val address: String,
+    @Column(name = "staffId", columnDefinition = "bigint(11) not null comment 'FK: staff.id'")
+    val staffId: Long,
+    @Column(name = "dateHour", columnDefinition = "datetime(0) not null comment '년월일시'")
+    val dateHour: LocalDateTime,
+    @Column(name = "quarter", columnDefinition = "varchar(100) not null comment '15분 기준 쿼터'")
+    val quarter: Int,
+    @Column(name = "available", columnDefinition = "bit(1) not null comment '예약가능 여부'")
+    val available: Boolean,
     @Column(name = "regTs", columnDefinition = "datetime(0) not null comment '생성일시'")
     val regTs: LocalDateTime,
     @LastModifiedDate
     @Column(name = "updTs", columnDefinition = "datetime(0) not null comment '마지막 수정일시'")
     val updTs: LocalDateTime,
 ) {
-
 }
