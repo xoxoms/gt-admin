@@ -29,5 +29,4 @@ class PositionEntity(
     @LastModifiedDate
     @Column(name = "updTs", columnDefinition = "datetime(0) not null comment '마지막 수정일시'")
     val updTs: LocalDateTime,
-) {
-}
+)

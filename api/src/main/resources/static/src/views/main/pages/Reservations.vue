@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="staffs"
+    id="reservations"
     fluid
     tag="section"
   >
@@ -141,14 +141,14 @@
 
     <div>
       <div class="px-6 py-3 ">
-        <p class="ml-2 font-weight-bold">직원 등록</p>
+        <p class="ml-2 font-weight-bold">예약 등록</p>
         <v-btn color="info" target="_blank" @click="openCreateModal">
-          <v-icon>mdi-account-plus</v-icon>
+          <v-icon>mdi-storefront-plus-outline</v-icon>
         </v-btn>
       </div>
     </div>
 
-    <base-material-card icon="mdi-account" title="직원 목록" class="px-5 py-3">
+    <base-material-card icon="mdi-calendar-clock" title="예약 목록" class="px-5 py-3">
       <v-simple-table>
         <thead>
           <tr>

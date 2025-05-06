@@ -19,8 +19,13 @@ export default new Router({
       children: [
         {
           name: '직원 관리',
-          path: '/Staffs',
+          path: '/staffs',
           component: () => import('@/views/main/pages/Staffs'),
+        },
+        {
+          name: '예약 관리',
+          path: '/reservations',
+          component: () => import('@/views/main/pages/Reservations'),
         }
       ],
     }

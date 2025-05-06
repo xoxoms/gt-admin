@@ -98,8 +98,13 @@
       items: [
         {
           title: '직원',
-          icon: 'mdi-account-plus',
+          icon: 'mdi-account',
           to: '/staffs',
+        },
+        {
+          title: '예약',
+          icon: 'mdi-calendar-clock',
+          to: '/reservations',
         }
       ],
     }),
