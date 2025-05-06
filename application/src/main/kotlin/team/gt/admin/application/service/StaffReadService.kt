@@ -46,6 +46,7 @@ class StaffReadService(
                 personId = staff.positionId,
                 privatePhone = person?.phone ?: default,
                 privateAddress = person?.address ?: default,
+                name = person?.name ?: default,
                 nickname = staff.nickname,
                 mainPhone = staff.mainPhone,
                 position = position?.name ?: default,

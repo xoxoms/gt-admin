@@ -18,6 +18,10 @@ class SkillEntity(
     val id: Long?,
     @Column(name = "name", columnDefinition = "varchar(100) not null comment '직책명'")
     val name: String,
+    @Column(name = "defaultPrice", columnDefinition = "int not null comment '기본 가격'")
+    val defaultPrice: Int,
+    @Column(name = "defaultQuarterTaken", columnDefinition = "int not null comment '기본 소요시간(15분 기준)'")
+    val defaultQuarterTaken: Int,
     @Column(name = "deleted", columnDefinition = "bit(1) not null comment '삭제여부'")
     val deleted: Boolean,
     @Column(name = "creator", columnDefinition = "varchar(100) not null comment '만든이'")

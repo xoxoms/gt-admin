@@ -11,6 +11,8 @@ object SkillParser {
         return SkillEntity(
             id = if (domain.id == JUST_CREATED_ID) null else domain.id,
             name = domain.name,
+            defaultPrice = domain.defaultPrice,
+            defaultQuarterTaken = domain.defaultQuarterTaken,
             deleted = domain.deleted,
             creator = domain.creator,
             regTs = domain.regTs,
@@ -24,6 +26,8 @@ object SkillParser {
         return Skill(
             id = entity.id!!,
             name = entity.name,
+            defaultPrice = entity.defaultPrice,
+            defaultQuarterTaken = entity.defaultQuarterTaken,
             deleted = entity.deleted,
             creator = entity.creator,
             regTs = entity.regTs,

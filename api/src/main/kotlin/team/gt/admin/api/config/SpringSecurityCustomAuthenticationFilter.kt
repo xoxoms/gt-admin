@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import team.gt.admin.api.exception.BadRequestException
-import team.gt.admin.contant.PathConstants
+import team.gt.admin.api.constant.PathConstants
 
 class SpringSecurityCustomAuthenticationFilter(
     private val objectMapper: ObjectMapper,

@@ -1,4 +1,4 @@
-package team.gt.admin.contant
+package team.gt.admin.api.constant
 
 class PathConstants {
     companion object {

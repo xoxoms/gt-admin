@@ -28,6 +28,7 @@ class StaffController(
                         personId = it.personId,
                         privatePhone = it.privatePhone,
                         privateAddress = it.privateAddress,
+                        name = it.name,
                         nickname = it.nickname,
                         mainPhone = it.mainPhone,
                         position = it.position,

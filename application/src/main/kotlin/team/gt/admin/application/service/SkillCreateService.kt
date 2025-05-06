@@ -9,7 +9,19 @@ class SkillCreateService(
     private val skillCreator: SkillCreator,
 ) {
 
-    fun create(name: String, creator: String): Skill {
-        return skillCreator.create(Skill.createNew(name, creator))
+    fun create(
+        name: String,
+        defaultPrice: Int,
+        defaultQuarterTaken: Int,
+        creator: String
+    ): Skill {
+        return skillCreator.create(
+            Skill.createNew(
+                name = name,
+                defaultPrice = defaultPrice,
+                defaultQuarterTaken = defaultQuarterTaken,
+                creator = creator,
+            )
+        )
     }
 }

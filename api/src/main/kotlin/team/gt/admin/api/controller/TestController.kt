@@ -1,6 +1,7 @@
 package team.gt.admin.api.controller
 
 import java.time.LocalDate
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import team.gt.admin.application.domain.staff.StaffSkillMappingData
@@ -12,6 +13,7 @@ import team.gt.admin.application.service.UserCreateService
 
 @RestController
 class TestController(
+    private val passwordEncoder: BCryptPasswordEncoder,
     private val userCreateService: UserCreateService,
     private val positionCreateService: PositionCreateService,
     private val skillCreateService: SkillCreateService,
@@ -21,10 +23,10 @@ class TestController(
 
     @PostMapping("/api/v1/init")
     fun init() {
-        userCreateService.create("a", "b", "c")
+        userCreateService.create("a", passwordEncoder.encode("b"), "c")
         val position = positionCreateService.createPositionIfNotExists("디자이너", "admin")
-        val cut = skillCreateService.create("커트", "admin")
-        val perm = skillCreateService.create("펌", "admin")
+        val cut = skillCreateService.create("커트", 15_000, 1, "admin")
+        val perm = skillCreateService.create("펌", 45_000, 4, "admin")
         staffCreateService.createStaff(
             name = "ms",
             privatePhone = "010-1234-1234",

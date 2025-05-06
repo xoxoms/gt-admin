@@ -8,6 +8,7 @@ class StaffDetailView(
     val privatePhone: String,
     val privateAddress: String,
 
+    val name: String,
     val nickname: String,
     val mainPhone: String,
 

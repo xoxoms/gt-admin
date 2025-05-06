@@ -20,7 +20,7 @@ class StaffScheduleStockEntity(
     val staffId: Long,
     @Column(name = "dateHour", columnDefinition = "datetime(0) not null comment '년월일시'")
     val dateHour: LocalDateTime,
-    @Column(name = "quarter", columnDefinition = "varchar(100) not null comment '15분 기준 쿼터'")
+    @Column(name = "quarter", columnDefinition = "int not null comment '15분 기준 쿼터'")
     val quarter: Int,
     @Column(name = "available", columnDefinition = "bit(1) not null comment '예약가능 여부'")
     val available: Boolean,
