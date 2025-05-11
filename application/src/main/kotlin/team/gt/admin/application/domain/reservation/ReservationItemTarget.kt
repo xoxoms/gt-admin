@@ -5,4 +5,9 @@ import team.gt.admin.application.enums.ReservationItemType
 class ReservationItemTarget(
     val itemType: ReservationItemType,
     val itemId: Long,
-)
+) {
+
+    fun isSkill(): Boolean {
+        return itemType == ReservationItemType.SKILL
+    }
+}

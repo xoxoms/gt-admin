@@ -38,8 +38,8 @@ class Reservation(
             reservedDate: LocalDate,
             reservedHour: Int,
             reservedQuarter: Int,
+            items: List<ReservationItem>,
             regTs: LocalDateTime = LocalDateTime.now(),
-            items: List<ReservationItem>
         ): Reservation {
 
             return Reservation(

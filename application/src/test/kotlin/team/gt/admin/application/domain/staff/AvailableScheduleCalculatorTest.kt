@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class AvailableScheduleCalculatorTest: BehaviorSpec({
     val staffId = 1L
@@ -12,19 +12,22 @@ class AvailableScheduleCalculatorTest: BehaviorSpec({
         val stocks = listOf(
             StaffScheduleStock.createNew(
                 staffId = staffId,
-                dateHour = LocalDateTime.of(2024, 1, 1, 9, 0, 0),
+                date = LocalDate.of(2024, 1, 1),
+                hour = 9,
                 quarter = 1,
                 available = true
             ),
             StaffScheduleStock.createNew(
                 staffId = staffId,
-                dateHour = LocalDateTime.of(2024, 1, 1, 9, 0, 0),
+                date = LocalDate.of(2024, 1, 1),
+                hour = 9,
                 quarter = 2,
                 available = true
             ),
             StaffScheduleStock.createNew(
                 staffId = staffId,
-                dateHour = LocalDateTime.of(2024, 1, 1, 9, 0, 0),
+                date = LocalDate.of(2024, 1, 1),
+                hour = 9,
                 quarter = 3,
                 available = true
             )
@@ -65,19 +68,22 @@ class AvailableScheduleCalculatorTest: BehaviorSpec({
         val stocks = listOf(
             StaffScheduleStock.createNew(
                 staffId = staffId,
-                dateHour = LocalDateTime.of(2024, 1, 1, 9, 0, 0),
+                date = LocalDate.of(2024, 1, 1),
+                hour = 9,
                 quarter = 1,
                 available = false
             ),
             StaffScheduleStock.createNew(
                 staffId = staffId,
-                dateHour = LocalDateTime.of(2024, 1, 1, 9, 0, 0),
+                date = LocalDate.of(2024, 1, 1),
+                hour = 9,
                 quarter = 2,
                 available = false
             ),
             StaffScheduleStock.createNew(
                 staffId = staffId,
-                dateHour = LocalDateTime.of(2024, 1, 1, 9, 0, 0),
+                date = LocalDate.of(2024, 1, 1),
+                hour = 9,
                 quarter = 3,
                 available = false
             )

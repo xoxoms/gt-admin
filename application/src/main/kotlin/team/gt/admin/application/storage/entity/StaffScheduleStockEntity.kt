@@ -18,10 +18,8 @@ class StaffScheduleStockEntity(
     val id: Long?,
     @Column(name = "staffId", columnDefinition = "bigint(11) not null comment 'FK: staff.id'")
     val staffId: Long,
-    @Column(name = "dateHour", columnDefinition = "datetime(0) not null comment '년월일시'")
-    val dateHour: LocalDateTime,
-    @Column(name = "quarter", columnDefinition = "int not null comment '15분 기준 쿼터'")
-    val quarter: Int,
+    @Column(name = "stock", columnDefinition = "datetime(0) not null comment '재고'")
+    val stock: LocalDateTime,
     @Column(name = "available", columnDefinition = "bit(1) not null comment '예약가능 여부'")
     val available: Boolean,
     @Column(name = "regTs", columnDefinition = "datetime(0) not null comment '생성일시'")
