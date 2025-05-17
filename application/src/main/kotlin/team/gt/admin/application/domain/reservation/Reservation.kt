@@ -2,7 +2,6 @@ package team.gt.admin.application.domain.reservation
 
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import team.gt.admin.application.constants.JUST_CREATED_ID
 import team.gt.admin.application.constants.SYSTEM
 import team.gt.admin.application.enums.ReservationSource
@@ -22,7 +21,6 @@ class Reservation(
     val updater: String,
     val updTs: LocalDateTime,
 ) {
-    val reservedVisitDateTime: LocalDateTime = LocalDateTime.of(reservedVisitDate, LocalTime.of(reservedVisitHour, reservedVisitQuarter * 15))
 
     class Customer(
         val customerId: Long?,

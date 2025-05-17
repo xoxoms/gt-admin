@@ -1,5 +1,8 @@
 package team.gt.admin.application.parser.reservation
 
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import team.gt.admin.application.constants.JUST_CREATED_ID
 import team.gt.admin.application.domain.reservation.Reservation
 import team.gt.admin.application.domain.reservation.ReservationItem
@@ -9,13 +12,14 @@ import team.gt.admin.application.storage.entity.ReservationItemEntity
 object ReservationParser {
 
     fun fromDomain(domain: Reservation): ReservationEntity {
+        val reservedVisitDateTime = quarterToTime(domain.reservedVisitDate, domain.reservedVisitHour, domain.reservedVisitQuarter)
 
         return ReservationEntity(
             id = if (domain.id == JUST_CREATED_ID) { null } else domain.id,
             staffId = domain.staffId,
             customerId = domain.customer.customerId,
             reservationSource = domain.customer.reservationSource,
-            reservedVisitDateTime = domain.reservedVisitDateTime,
+            reservedVisitDateTime = reservedVisitDateTime,
             actualVisitDateTime = domain.actualVisitDateTime,
             status = domain.status,
             regTs = domain.regTs,
@@ -76,5 +80,11 @@ object ReservationParser {
             updater = entity.updater,
             updTs = entity.updTs,
         )
+    }
+
+
+    fun quarterToTime(date: LocalDate, hour: Int, quarter: Int): LocalDateTime {
+        val minute = (quarter - 1) * 15
+        return LocalDateTime.of(date, LocalTime.of(hour, minute))
     }
 }

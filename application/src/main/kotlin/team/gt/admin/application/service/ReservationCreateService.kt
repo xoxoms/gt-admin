@@ -11,6 +11,7 @@ import team.gt.admin.application.domain.staff.StaffSkillReader
 import team.gt.admin.application.domain.stock.StockBlockProcessor
 import team.gt.admin.application.enums.ReservationItemType
 import team.gt.admin.application.enums.ReservationSource
+import team.gt.admin.application.exception.StaffSkillNotFoundException
 
 @Service
 class ReservationCreateService(
@@ -28,7 +29,7 @@ class ReservationCreateService(
         quarter: Int,
         itemTargets: List<ReservationItemTarget>,
     ): Long {
-        val staffSkills = getStaffSkills(staffId, itemTargets)
+        val staffSkills = getStaffSkillsOrThrow(staffId, itemTargets)
 
         stockBlockProcessor.blockOrThrow(
             staffId = staffId,
@@ -82,11 +83,12 @@ class ReservationCreateService(
         return reservationCreator.create(reservation)
     }
 
-    private fun getStaffSkills(staffId: Long, itemTargets: List<ReservationItemTarget>): List<StaffSkillDetail> {
+    private fun getStaffSkillsOrThrow(staffId: Long, itemTargets: List<ReservationItemTarget>): List<StaffSkillDetail> {
         val skillIds = itemTargets
             .filter { it.isSkill() }
             .map { it.itemId }
-
-        return staffSkillReader.read(staffId, skillIds)
+        val result = staffSkillReader.read(staffId, skillIds)
+        if (result.isEmpty()) { throw StaffSkillNotFoundException() }
+        return result
     }
 }

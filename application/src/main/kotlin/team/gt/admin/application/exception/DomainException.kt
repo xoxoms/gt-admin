@@ -7,5 +7,5 @@ open class DomainException(
 }
 
 class DomainNotFoundException: DomainException("존재하지 않습니다.")
-
 class CanNotBlockStockException: DomainException("예약에 실패했습니다.")
+class StaffSkillNotFoundException: DomainException("시술이 존재하지 않습니다.")
