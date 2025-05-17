@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.time.LocalDate
 import java.time.LocalDateTime
 import org.springframework.data.annotation.LastModifiedDate
 
@@ -18,9 +19,11 @@ class StaffScheduleStockEntity(
     val id: Long?,
     @Column(name = "staffId", columnDefinition = "bigint(11) not null comment 'FK: staff.id'")
     val staffId: Long,
-    @Column(name = "dateHour", columnDefinition = "datetime(0) not null comment '년월일시'")
-    val dateHour: LocalDateTime,
-    @Column(name = "quarter", columnDefinition = "int not null comment '15분 기준 쿼터'")
+    @Column(name = "stockDate", columnDefinition = "date not null comment '날짜'")
+    val stockDate: LocalDate,
+    @Column(name = "stockHour", columnDefinition = "int not null comment '시간'")
+    val stockHour: Int,
+    @Column(name = "quarter", columnDefinition = "int not null comment '쿼터'")
     val quarter: Int,
     @Column(name = "available", columnDefinition = "bit(1) not null comment '예약가능 여부'")
     val available: Boolean,

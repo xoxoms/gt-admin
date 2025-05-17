@@ -24,7 +24,7 @@ class BookingAvailabilityController(
                 .map {
                     AvailableStockResponse(
                         stockId = it.id,
-                        hour = it.dateHour.hour,
+                        hour = it.hour,
                         quarter = it.quarter,
                     )
                 }

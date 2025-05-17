@@ -16,7 +16,7 @@ class BookingAvailabilityService(
         date: LocalDate,
         quarterTaken: Int,
     ): List<StaffScheduleStock> {
-        val staffScheduleStocks = staffScheduleStockReader.readByStaffIdAndDateInclusive(staffId, date.atStartOfDay())
+        val staffScheduleStocks = staffScheduleStockReader.readByStaffIdAndDate(staffId, date)
         return AvailableScheduleCalculator.calculate(quarterTaken, staffScheduleStocks)
     }
 }

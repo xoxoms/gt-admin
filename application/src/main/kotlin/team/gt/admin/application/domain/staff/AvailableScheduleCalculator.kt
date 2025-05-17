@@ -10,7 +10,7 @@ object AvailableScheduleCalculator {
         if (availableStocks.isEmpty()) { return emptyList() }
 
         val sorted = availableStocks
-            .sortedWith(compareBy({ it.dateHour }, { it.quarter }))
+            .sortedWith(compareBy({ it.hour }, { it.quarter }))
         val groupedByContinuous = mutableListOf<List<StaffScheduleStock>>()
 
         var current = mutableListOf<StaffScheduleStock>()
@@ -18,7 +18,7 @@ object AvailableScheduleCalculator {
         current.add(sorted.first())
 
         for (i in 1 ..< sorted.size) {
-            if (!current.last().isBefore(sorted[i])) {
+            if (!current.last().isJustBefore(sorted[i])) {
                 current = mutableListOf<StaffScheduleStock>()
                 groupedByContinuous.add(current)
             }

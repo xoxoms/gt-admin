@@ -10,7 +10,8 @@ object StaffScheduleStockParser {
         return StaffScheduleStockEntity(
             id = if (domain.id == JUST_CREATED_ID) null else domain.id,
             staffId = domain.staffId,
-            dateHour = domain.dateHour,
+            stockDate = domain.date,
+            stockHour = domain.hour,
             quarter = domain.quarter,
             available = domain.available,
             regTs = domain.regTs,
@@ -22,7 +23,8 @@ object StaffScheduleStockParser {
         return StaffScheduleStock(
             id = entity.id!!,
             staffId = entity.staffId,
-            dateHour = entity.dateHour,
+            date = entity.stockDate,
+            hour = entity.stockHour,
             quarter = entity.quarter,
             available = entity.available,
             regTs = entity.regTs,

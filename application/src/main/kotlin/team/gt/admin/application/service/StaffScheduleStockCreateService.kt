@@ -37,7 +37,8 @@ class StaffScheduleStockCreateService(
             (1..4).map { quarter ->
                 StaffScheduleStock.createNew(
                     staffId = staff.id,
-                    dateHour = date.atTime(hour, 0),
+                    date = date,
+                    hour = hour,
                     quarter = quarter,
                     available = true
                 )
