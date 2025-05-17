@@ -6,6 +6,7 @@ import team.gt.admin.application.domain.reservation.Reservation
 import team.gt.admin.application.domain.reservation.ReservationCreator
 import team.gt.admin.application.domain.reservation.ReservationItem
 import team.gt.admin.application.domain.reservation.ReservationItemTarget
+import team.gt.admin.application.domain.staff.StaffSkillDetail
 import team.gt.admin.application.domain.staff.StaffSkillReader
 import team.gt.admin.application.domain.stock.StockBlockProcessor
 import team.gt.admin.application.enums.ReservationItemType
@@ -27,37 +28,37 @@ class ReservationCreateService(
         quarter: Int,
         itemTargets: List<ReservationItemTarget>,
     ): Long {
-        stockBlockProcessor.block(
-            staffId,
-            date,
-            hour,
-            quarter,
+        val staffSkills = getStaffSkills(staffId, itemTargets)
 
+        stockBlockProcessor.blockOrThrow(
+            staffId = staffId,
+            date = date,
+            hour = hour,
+            quarter = quarter,
+            totalQuarterTaken = staffSkills.sumOf { it.quarterTaken },
         )
 
-        val reservation = Reservation.createNew(
+        return createReservation(
             staffId = staffId,
             customerId = customerId,
-            reservationSource = source,
-            reservedDate = date,
-            reservedHour = hour,
-            reservedQuarter = quarter,
-            items = makeReservationItems(staffId, itemTargets)
+            source = source,
+            date = date,
+            hour = hour,
+            quarter = quarter,
+            staffSkills = staffSkills
         )
-        return reservationCreator.create(reservation)
     }
 
-    private fun makeReservationItems(
+    private fun createReservation(
         staffId: Long,
-        itemTargets: List<ReservationItemTarget>,
-    ): List<ReservationItem> {
-
-        val skillIds = itemTargets
-            .filter { it.isSkill() }
-            .map { it.itemId }
-
-        val staffSkills = staffSkillReader.read(staffId, skillIds)
-        return staffSkills
+        customerId: Long?,
+        source: ReservationSource,
+        date: LocalDate,
+        hour: Int,
+        quarter: Int,
+        staffSkills: List<StaffSkillDetail>,
+    ): Long {
+        val reservationItems = staffSkills
             .map {
                 ReservationItem.createNew(
                     itemType = ReservationItemType.SKILL,
@@ -67,5 +68,25 @@ class ReservationCreateService(
                     quarterTaken = it.quarterTaken,
                 )
             }
+
+        val reservation = Reservation.createNew(
+            staffId = staffId,
+            customerId = customerId,
+            reservationSource = source,
+            reservedDate = date,
+            reservedHour = hour,
+            reservedQuarter = quarter,
+            items = reservationItems
+        )
+
+        return reservationCreator.create(reservation)
+    }
+
+    private fun getStaffSkills(staffId: Long, itemTargets: List<ReservationItemTarget>): List<StaffSkillDetail> {
+        val skillIds = itemTargets
+            .filter { it.isSkill() }
+            .map { it.itemId }
+
+        return staffSkillReader.read(staffId, skillIds)
     }
 }
