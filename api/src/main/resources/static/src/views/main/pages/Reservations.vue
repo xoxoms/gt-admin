@@ -153,16 +153,28 @@
         <thead>
           <tr>
             <th class="primary--text font-weight-bold">
-              사번
+              예약번호
             </th>
             <th class="primary--text font-weight-bold">
-              이름
+              방문예정시간
             </th>
             <th class="primary--text font-weight-bold">
-              닉네임
+              실제방문시간
             </th>
             <th class="primary--text font-weight-bold">
-              포지션
+              담당 디자이너
+            </th>
+            <th class="primary--text font-weight-bold">
+              예약내용
+            </th>
+            <th class="primary--text font-weight-bold">
+              예상소요시간
+            </th>
+            <th class="primary--text font-weight-bold">
+              예상결제금액
+            </th>
+            <th class="primary--text font-weight-bold">
+              예약상태
             </th>
             <th class="primary--text font-weight-bold">
               수정/삭제
@@ -171,11 +183,15 @@
         </thead>
 
         <tbody>
-          <tr v-for="item in staffs" :key="item.id">
-            <td>{{item.staffId}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.nickname}}</td>
-            <td>{{item.position}}</td>
+          <tr v-for="item in reservations" :key="item.reservationId">
+            <td>{{item.reservationId}}</td>
+            <td>{{item.reservedVisitDateTime}}</td>
+            <td>{{item.actualVisitDateTimeOrNull}}</td>
+            <td>{{item.staffNickname}}</td>
+            <td>{{item.itemSummary.itemInfos}}</td>
+            <td>{{item.itemSummary.totalQuarterTakenKr}}</td>
+            <td>{{item.itemSummary.totalPriceKr}}</td>
+            <td>{{item.reservationStatusKr}}</td>
             <td>
               <v-btn
                   color="blue"
@@ -228,6 +244,8 @@ export default {
       snackbar: false,
       snackbarColor: 'success',
       snackbarMessage: '',
+      reservations: [],
+
       positions: [],
       skills: [],
       staffs: [],
@@ -382,11 +400,11 @@ export default {
     },
 
     async fetchData(cursorExclusive) {
-      const url = `${API_URL}/v1/staffs?size=5000&cursorExclusive=${cursorExclusive}`
+      const url = `${API_URL}/v1/reservations?size=5000`
       await fetch(url)
           .then(response =>  response.json())
           .then(data => {
-            this.staffs = data.data
+            this.reservations = data.data
           })
     },
 
@@ -412,12 +430,6 @@ export default {
       this.snackbarMessage = message
       this.snackbarColor = color
       this.snackbar = true
-    },
-
-    test(target) {
-      console.log(target)
-      console.log(this.createSkillIds)
-      console.log(document.getElementById(`skillPrice_${target.id}`))
     }
   }
 }

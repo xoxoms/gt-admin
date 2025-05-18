@@ -6,7 +6,6 @@ import team.gt.admin.application.constants.SYSTEM
 import team.gt.admin.application.enums.ReservationItemStatus
 import team.gt.admin.application.enums.ReservationItemType
 
-
 class ReservationItem(
     val id: Long,
     var reservationId: Long,
@@ -20,6 +19,8 @@ class ReservationItem(
     val updater: String,
     val updTs: LocalDateTime,
 ) {
+    fun isSkill(): Boolean { return itemType == ReservationItemType.SKILL }
+    fun isProduct(): Boolean { return itemType == ReservationItemType.PRODUCT }
 
     fun applyReservationId(reservationId: Long) {
         this.reservationId = reservationId

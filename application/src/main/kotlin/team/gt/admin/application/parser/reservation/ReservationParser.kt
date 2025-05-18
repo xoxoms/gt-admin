@@ -46,22 +46,7 @@ object ReservationParser {
     }
 
     fun toDomain(entity: ReservationEntity, reservationItemEntities: List<ReservationItemEntity>): Reservation {
-        val items = reservationItemEntities
-            .map { itemEntity ->
-                ReservationItem(
-                    id = itemEntity.id!!,
-                    reservationId = itemEntity.reservationId,
-                    itemType = itemEntity.itemType,
-                    itemId = itemEntity.itemId,
-                    itemName = itemEntity.itemName,
-                    price = itemEntity.price,
-                    quarterTaken = itemEntity.quarterTaken,
-                    status = itemEntity.status,
-                    regTs = itemEntity.regTs,
-                    updater = itemEntity.updater,
-                    updTs = itemEntity.updTs
-                )
-            }
+        val items = reservationItemEntities.map(this::toDomain)
 
         return Reservation(
             id = entity.id!!,
@@ -79,6 +64,22 @@ object ReservationParser {
             regTs = entity.regTs,
             updater = entity.updater,
             updTs = entity.updTs,
+        )
+    }
+
+    fun toDomain(itemEntity: ReservationItemEntity): ReservationItem {
+        return ReservationItem(
+            id = itemEntity.id!!,
+            reservationId = itemEntity.reservationId,
+            itemType = itemEntity.itemType,
+            itemId = itemEntity.itemId,
+            itemName = itemEntity.itemName,
+            price = itemEntity.price,
+            quarterTaken = itemEntity.quarterTaken,
+            status = itemEntity.status,
+            regTs = itemEntity.regTs,
+            updater = itemEntity.updater,
+            updTs = itemEntity.updTs
         )
     }
 

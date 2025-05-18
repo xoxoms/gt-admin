@@ -5,4 +5,5 @@ import team.gt.admin.application.storage.entity.CustomerEntity
 
 interface CustomerRepository: JpaRepository<CustomerEntity, Long> {
 
+    fun findByIdIn(customerIds: List<Long>): List<CustomerEntity>
 }
