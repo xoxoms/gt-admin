@@ -10,11 +10,11 @@
 - h2 DB(MYSQL mode)
 
 # 뷰 어드민 실행
-1.1. cd {WORKSPACE}/gt-admin/api/src/main/resources/static
-1.2. npm install
-1.3. npm run dev
+- cd {WORKSPACE}/gt-admin/api/src/main/resources/static
+- npm install
+- npm run dev
 
 # 서버 실행
-2.1. cd {WORKSPACE}/gt-admin
-2.2. ./gradlew clean bootJar
-2.3. java -jar ./api/build/libs/api-1.0-SNAPSHOT.jar
+- cd {WORKSPACE}/gt-admin
+- ./gradlew clean bootJar
+- java -jar ./api/build/libs/api-1.0-SNAPSHOT.jar
