@@ -105,6 +105,11 @@
           title: '예약',
           icon: 'mdi-calendar-clock',
           to: '/reservations',
+        },
+        {
+          title: '예약 현황',
+          icon: 'mdi-monitor-dashboard',
+          to: '/dashboard',
         }
       ],
     }),

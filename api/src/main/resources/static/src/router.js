@@ -26,6 +26,11 @@ export default new Router({
           name: '예약 관리',
           path: '/reservations',
           component: () => import('@/views/main/pages/Reservations'),
+        },
+        {
+          name: '예약 현황',
+          path: '/dashboard',
+          component: () => import('@/views/main/pages/Dashboard'),
         }
       ],
     }
