@@ -1,20 +1,25 @@
 <template>
-  <v-col class="time-quarter">
-<!--    {{quarter}}-->
+  <v-col class="time-quarter booked" v-if="booked">
+  </v-col>
+  <v-col class="time-quarter" v-else>
+    {{title}}
   </v-col>
 </template>
 
 <style scoped lang="sass">
   .time-quarter
-    width: 50px
-    height: 25px
     flex: none
+    border: 0.2px solid #eeeeee
+  .booked
+    background-color: goldenrod
 </style>
 <script>
 export default {
   props: {
     title: String,
-    quarter: Number
+    hour: Number,
+    quarter: Number,
+    booked: Boolean
   }
 }
 </script>
