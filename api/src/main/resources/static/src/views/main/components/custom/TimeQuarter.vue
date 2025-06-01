@@ -1,16 +1,5 @@
 <template>
-  <v-col class="time-quarter" :class="{
-    empty: quarterItem === undefined,
-    booked: quarterItem !== undefined,
-    startQuarter: quarterItem !== undefined && quarterItem.startQuarter,
-    endQuarter: quarterItem !== undefined && quarterItem.endQuarter
-  }">
-    <template
-      v-if="quarterItem !== undefined && quarterItem.startQuarter"
-    >
-      <h5 class="customer-name">{{ quarterItem.customerName }}</h5>
-      <h6 class="customer-name">{{ quarterItem.displayItemNames }}</h6>
-    </template>
+  <v-col class="time-quarter empty">
   </v-col>
 </template>
 
@@ -20,6 +9,7 @@
     height: 30px
   .empty
     border: 0.2px solid #eeeeee
+    position: static
   .booked
     background-color: goldenrod
     border-right-style: inset
@@ -27,6 +17,7 @@
   .startQuarter
     padding: 1px
     border-top-style: outset
+    border-bottom-style: inset
     border-right-style: inset
     border-left-style: outset
   .endQuarter
