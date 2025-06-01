@@ -4,4 +4,5 @@ enum class VisitSource {
     WorkIn,
     SNS,
     Person,
+    Naver,
 }
