@@ -5,7 +5,7 @@
     tag="section"
   >
     <div class="dashboard">
-      <v-row style="padding-left: 10px; padding-top: 10px">
+      <v-row style="width: max-content; overflow: scroll;">
         <reservation-hour :header="true"/>
         <template v-for="perStaff in data.perStaffs">
           <reservation-hour :header="true" v-bind:per-staff="perStaff"/>
@@ -13,7 +13,7 @@
       </v-row>
 
       <template v-for="workingTime in data.workingTimes">
-        <v-row style="padding-left: 10px;">
+        <v-row style="width: max-content;">
           <reservation-hour v-bind:hour="workingTime"/>
           <template v-for="perStaff in data.perStaffs">
             <reservation-hour v-bind:hour="workingTime" v-bind:per-staff="perStaff"/>
@@ -27,9 +27,11 @@
 
 <style scoped lang="sass">
   .dashboard
-    width: 1000px
-    height: 1000px
-    overflow: scroll
+    overscroll-behavior-x: none
+    padding: 10px
+    height: max-content
+    overflow-x: scroll
+    overflow-y: clip
 </style>
 <script>
 import ReservationHour from "@/views/main/components/custom/ReservationHour.vue";

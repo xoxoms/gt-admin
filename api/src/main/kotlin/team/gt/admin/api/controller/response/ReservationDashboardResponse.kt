@@ -14,20 +14,17 @@ class ReservationDashboardResponse(
         val staffNickname: String,
         val bookings: List<BookedItem>,
     ) {
-        val hourMap: Map<Int, List<QuarterItem>>
-        val hourQuarterMap: Map<String, QuarterItem>
-        val hourQuarterIdMap: Map<String, QuarterItem>
+        val hourQuarterMap: Map<String, List<BookedItem>>
         val maxBookedPerQuarter: Int
 
         init {
-            val quarterItems = bookings.flatMap { it.makeQuarterItems() }
-
-            this.hourMap = quarterItems.groupBy { it.hour }
-            this.hourQuarterMap = quarterItems
-                .associateBy { "${it.hour}_${it.quarter}" }
-            this.hourQuarterIdMap = quarterItems
-                .associateBy { "${it.hour}_${it.quarter}_${it.bookingItemId}" }
-            this.maxBookedPerQuarter = hourMap
+//            val quarterItems = bookings
+//                .flatMap { it.makeQuarterItems() }
+//                .distinctBy { it.uniqueKey }
+//
+            this.hourQuarterMap = bookings
+                .groupBy { "${it.hour}_${it.quarter}" }
+            this.maxBookedPerQuarter = hourQuarterMap
                 .values
                 .maxOfOrNull { bookedItems -> bookedItems.size } ?: 0
         }
@@ -43,7 +40,9 @@ class ReservationDashboardResponse(
         val source: VisitSource,
         val displayItemNames: String,
         val totalQuarterTaken: Int,
-    )
+    ) {
+        val uniqueKey = "${bookingItemId}_${hour}_${quarter}"
+    }
 
     class BookedItem(
         val bookingItemId: Long,
