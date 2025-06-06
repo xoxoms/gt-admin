@@ -14,10 +14,38 @@ class ReservationDashboardResponse(
         val staffNickname: String,
         val bookings: List<BookedItem>,
     ) {
+        val hourQuarterMap: Map<String, List<BookedItem>>
+        val maxBookedPerQuarter: Int
 
+        init {
+//            val quarterItems = bookings
+//                .flatMap { it.makeQuarterItems() }
+//                .distinctBy { it.uniqueKey }
+//
+            this.hourQuarterMap = bookings
+                .groupBy { "${it.hour}_${it.quarter}" }
+            this.maxBookedPerQuarter = hourQuarterMap
+                .values
+                .maxOfOrNull { bookedItems -> bookedItems.size } ?: 0
+        }
+    }
+
+    class QuarterItem(
+        val bookingItemId: Long,
+        val startQuarter: Boolean,
+        val endQuarter: Boolean,
+        val hour: Int,
+        val quarter: Int,
+        val customerName: String,
+        val source: VisitSource,
+        val displayItemNames: String,
+        val totalQuarterTaken: Int,
+    ) {
+        val uniqueKey = "${bookingItemId}_${hour}_${quarter}"
     }
 
     class BookedItem(
+        val bookingItemId: Long,
         val customerName: String,
         val displayItemNames: String,
         val hour: Int,
@@ -25,5 +53,39 @@ class ReservationDashboardResponse(
         val totalQuarterTaken: Int,
         val booked: Boolean,
         val source: VisitSource,
-    )
+    ) {
+        fun makeQuarterItems(): List<QuarterItem> {
+            val result = mutableListOf<QuarterItem>()
+            var currentHour = hour
+            var currentQuarter = quarter
+
+            for (i in quarter ..< quarter + totalQuarterTaken) {
+                if (currentQuarter == 5) {
+                    currentHour++
+                    currentQuarter = 1
+                }
+
+                val start = i == quarter
+                val end = i == quarter + totalQuarterTaken - 1
+
+                result.add(
+                    QuarterItem(
+                        bookingItemId = bookingItemId,
+                        startQuarter = start,
+                        endQuarter = end,
+                        hour = currentHour,
+                        quarter = currentQuarter,
+                        customerName = customerName,
+                        source = source,
+                        displayItemNames = displayItemNames,
+                        totalQuarterTaken = totalQuarterTaken,
+                    )
+                )
+
+                currentQuarter++
+            }
+
+            return result
+        }
+    }
 }
