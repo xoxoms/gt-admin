@@ -1,23 +1,23 @@
 <template>
-  <v-row class="reservation-hour-header reservation-hour" :class="{
-      'header-x-2': perStaff !== undefined && perStaff.maxBookedPerQuarter === 2,
-      'header-x-3': perStaff !== undefined && perStaff.maxBookedPerQuarter === 3,
-      'header-x-4': perStaff !== undefined && perStaff.maxBookedPerQuarter === 4,
-      'header-x-5': perStaff !== undefined && perStaff.maxBookedPerQuarter === 5,
-      'header-x-6': perStaff !== undefined && perStaff.maxBookedPerQuarter === 6,
-      'header-x-7': perStaff !== undefined && perStaff.maxBookedPerQuarter >= 7,
-    }" v-if="header === true">
+  <v-row v-if="header === true" class="reservation-hour-header reservation-hour" :class="{
+      'header-x-2': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 2,
+      'header-x-3': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 3,
+      'header-x-4': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 4,
+      'header-x-5': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 5,
+      'header-x-6': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 6,
+      'header-x-7': perStaff !== undefined && perStaff.maxReservationCountPerQuarter >= 7,
+    }">
     <v-col class="header-first" v-if="perStaff === undefined">{{new Date().toLocaleDateString('ko-KR')}}</v-col>
     <v-col class="header-items" v-else>{{perStaff.staffNickname}}</v-col>
   </v-row>
-  <v-row class="reservation-hour" :class="{
-      'header-x-2': perStaff !== undefined && perStaff.maxBookedPerQuarter === 2,
-      'header-x-3': perStaff !== undefined && perStaff.maxBookedPerQuarter === 3,
-      'header-x-4': perStaff !== undefined && perStaff.maxBookedPerQuarter === 4,
-      'header-x-5': perStaff !== undefined && perStaff.maxBookedPerQuarter === 5,
-      'header-x-6': perStaff !== undefined && perStaff.maxBookedPerQuarter === 6,
-      'header-x-7': perStaff !== undefined && perStaff.maxBookedPerQuarter >= 7,
-    }" v-else>
+  <v-row v-else class="reservation-hour" :class="{
+      'header-x-2': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 2,
+      'header-x-3': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 3,
+      'header-x-4': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 4,
+      'header-x-5': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 5,
+      'header-x-6': perStaff !== undefined && perStaff.maxReservationCountPerQuarter === 6,
+      'header-x-7': perStaff !== undefined && perStaff.maxReservationCountPerQuarter >= 7,
+    }">
     <template v-if="perStaff === undefined">
       <v-col class="header-first">{{hour}}시</v-col>
     </template>
@@ -45,20 +45,17 @@
               'left-5': idx === 5,
               'left-6': idx === 6,
 
-              'hover': hoveredColumn === hour + '_' + quarter
-            }" class="booking" :key="hour + '_' + quarter" @mouseover="hovered(quarter)" @mouseleave="hovered(null)">
+              'canceled': isCanceled(item)
+            }" class="booking" @mouseover="hovered(item)" @mouseleave="hovered(null)">
               <div class="booking-text">{{item.customerName}} {{quarter}}</div>
+              <span class="remove-reservation clickable" @click="removeReservation(item)">
+                <v-icon v-if="isHovered(item) && !isCanceled(item)" style="color: palevioletred;" aria-label="Close">mdi-close</v-icon>
+              </span>
             </div>
           </template>
-          <v-col class="empty" :class="{
+          <v-col class="empty clickable" :class="{
               'even-row-color': quarter % 2 === 0,
-            }" @mouseover="hovered(quarter)" @mouseleave="hovered(null)">
-
-            <span class="add-reservation" :class="{
-                'add-reservation-hover': isHovered(quarter),
-              }">
-              <v-icon v-if="isHovered(quarter)" aria-label="Close" @click="">mdi-plus-circle</v-icon>
-            </span>
+            }">
           </v-col>
         </template>
       </v-col>
@@ -82,6 +79,8 @@
     background-color: #3c4858
     min-width: 100px
     height: 50px
+  .canceled
+    text-decoration: line-through #eeeeee
   .quarter
     width: 100px
     padding: 0
@@ -116,9 +115,12 @@
     border-radius: 10px
     cursor: pointer
   .booking-text
-    margin-top: 5px
+    margin-top: 2px
     margin-left: 5px
     color: #eeeeee
+    max-width: 70px
+    overflow: hidden
+    white-space: nowrap
   .quarter-1
     height: 25px
   .quarter-2
@@ -151,21 +153,21 @@
     left: 500px
   .left-6
     left: 600px
-  .add-reservation
-    display: block
+  .remove-reservation
+    position: absolute
     float: right
-    margin-right: -11px
-    margin-top: -11px
+    right: 0
   .empty:hover
     background-color: #FAFAFF
   .empty
     border: 0.2px solid #eeeeee
     position: static
-    cursor: pointer
     flex: none
     height: 25px
   .even-row-color
     background-color: #FDFDFD
+  .clickable
+    cursor: pointer
 </style>
 <script>
 import TimeQuarter from "@/views/main/components/custom/TimeQuarter.vue";
@@ -177,7 +179,7 @@ export default {
     headerDate: String,
     hour: Number,
     perStaff: {
-      maxBookedPerQuarter: Number,
+      maxReservationCountPerQuarter: Number,
       staffNickname: String,
       hourQuarterMap: Array,
     },
@@ -190,13 +192,26 @@ export default {
   },
 
   methods: {
-    hovered(quarter) {
-      this.hoveredColumn = this.hour + "_" + quarter
+    hovered(reservation) {
+      if (reservation === null) {
+        this.hoveredColumn = null
+      } else {
+        this.hoveredColumn = reservation.hour + "_" + reservation.quarter + "_" + reservation.reservationId
+      }
     },
 
-    isHovered(quarter) {
-      console.log(this.hoveredColumn === this.hour + "_" + quarter)
-      return this.hoveredColumn === this.hour + "_" + quarter
+    isHovered(reservation) {
+      return this.hoveredColumn === reservation.hour + "_" + reservation.quarter + "_" + reservation.reservationId
+    },
+
+    isCanceled(reservation) {
+      return reservation.reservationStatus === 'CANCELED'
+    },
+
+    removeReservation(reservation) {
+      if (confirm('예약을 취소할까요?')) {
+        this.$parent.cancelReservation(reservation.reservationId)
+      }
     }
   }
 }

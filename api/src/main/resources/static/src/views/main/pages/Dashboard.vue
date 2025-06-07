@@ -69,13 +69,30 @@ export default {
 
   methods: {
 
-
     async fetchData() {
       const url = `${API_URL}/v1/reservation-dashboard`
       await fetch(url)
           .then(response =>  response.json())
           .then(response => {
             this.data = response.data
+          })
+    },
+
+    async cancelReservation(reservationId) {
+      const url = `${API_URL}/v1/reservations/${reservationId}/cancel`
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: {}
+      }
+      await fetch(url, requestOptions)
+          .then(response =>  response.json())
+          .then(response => {
+            if (response.success) {
+              this.fetchData()
+            } else {
+              alert(response.error.message)
+            }
           })
     }
   }

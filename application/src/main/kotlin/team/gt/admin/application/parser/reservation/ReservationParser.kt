@@ -83,9 +83,22 @@ object ReservationParser {
         )
     }
 
-
     fun quarterToTime(date: LocalDate, hour: Int, quarter: Int): LocalDateTime {
         val minute = (quarter - 1) * 15
         return LocalDateTime.of(date, LocalTime.of(hour, minute))
+    }
+
+    fun timeToQuarter(time: LocalDateTime): Int {
+        val minute = time.minute
+        return when (minute) {
+            0 -> 1
+            15 -> 2
+            30 -> 3
+            45 -> 4
+            else -> {
+                // TODO. 예외처리 필요
+                1
+            }
+        }
     }
 }

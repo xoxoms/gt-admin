@@ -18,4 +18,8 @@ class CustomerReader(
         return customerRepository.findAll(PageRequest.of(page, size, Sort.by("id")))
             .map(Customer::fromEntity)
     }
+
+    fun readCustomerAndPersonByCustomerIds(customerIds: List<Long>): List<CustomerAndPerson> {
+        return customerRepository.readCustomerAndPersonByCustomerIds(customerIds)
+    }
 }

@@ -22,6 +22,10 @@ class Reservation(
     val updTs: LocalDateTime,
 ) {
 
+    fun canNotCancel(): Boolean {
+        return this.status != ReservationStatus.NORMAL
+    }
+
     class Customer(
         val customerId: Long?,
         val reservationSource: ReservationSource,
